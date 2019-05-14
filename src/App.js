@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
 // Stateless Functional Components
-const Euro = ({ amount }) => <p>Euro: {amount * 0.86}</p>;
-const Pound = ({ amount }) => <p>Pound: {amount * 0.76}</p>;
+const Euro = ({ amount }) => <p>Euro: {(amount * 0.86).toFixed(2)}</p>;
+const Pound = ({ amount }) => <p>Pound: {(amount * 0.76).toFixed(2)}</p>;
 
 const App = () => (
   /* The Amount component becomes a Render Prop Component; it renders a FUNCTION that returns
