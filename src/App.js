@@ -1,26 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// Stateless Functional Components
+const Euro = ({ amount }) => <p>Euro: {amount * 0.86}</p>;
+const Pound = ({ amount }) => <p>Pound: {amount * 0.76}</p>;
+
+const App = () => (
+  /* The Amount component becomes a Render Prop Component; it renders a FUNCTION that returns
+    the Pound and Euro components as children. */
+  <Amount>
+    {amount => (
+      <div>
+        <Pound amount={amount} />
+        <Euro amount={amount} />
+      </div>
+    )}
+  </Amount>
+);
+
+class Amount extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      amount: 0
+    };
+  }
+
+  onIncrement = () => {
+    this.setState(state => ({ amount: state.amount + 1 }));
+  };
+
+  onDecrement = () => {
+    this.setState(state => ({ amount: state.amount - 1 }));
+  };
+
+  render() {
+    return (
+      <div>
+        <span>US Dollar: {this.state.amount} </span>
+
+        <button type="button" onClick={this.onIncrement}>
+          +
+        </button>
+        <button type="button" onClick={this.onDecrement}>
+          -
+        </button>
+
+        {/* This has to be called as a function with the state passed in. Called "Children as a function" */}
+        {this.props.children(this.state.amount)}
+      </div>
+    );
+  }
 }
 
 export default App;
